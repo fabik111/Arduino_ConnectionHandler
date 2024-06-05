@@ -49,12 +49,12 @@ __attribute__((weak)) void mkr_gsm_feed_watchdog()
 
 GSMConnectionHandler::GSMConnectionHandler(const char * pin, const char * apn, const char * login, const char * pass, bool const keep_alive)
 : ConnectionHandler{keep_alive, NetworkAdapter::GSM}
-, _pin(pin)
-, _apn(apn)
-, _login(login)
-, _pass(pass)
 {
-
+  _settings.type = NetworkAdapter::GSM;
+  strcpy(_settings.values.gsm.pin, pin);
+  strcpy(_settings.values.gsm.apn, apn);
+  strcpy(_settings.values.gsm.login, login);
+  strcpy(_settings.values.gsm.pass, pass);
 }
 
 /******************************************************************************
@@ -74,7 +74,7 @@ NetworkConnectionState GSMConnectionHandler::update_handleInit()
 {
   mkr_gsm_feed_watchdog();
 
-  if (_gsm.begin(_pin) != GSM_READY)
+  if (_gsm.begin(_settings.values.gsm.pin) != GSM_READY)
   {
     Debug.print(DBG_ERROR, F("SIM not present or wrong PIN"));
     return NetworkConnectionState::ERROR;
@@ -88,7 +88,8 @@ NetworkConnectionState GSMConnectionHandler::update_handleInit()
 
   mkr_gsm_feed_watchdog();
 
-  GSM3_NetworkStatus_t const network_status = _gprs.attachGPRS(_apn, _login, _pass, true);
+  GSM3_NetworkStatus_t const network_status = _gprs.attachGPRS(
+    _settings.values.gsm.apn, _settings.values.gsm.login, _settings.values.gsm.pass, true);
   Debug.print(DBG_DEBUG, F("GPRS.attachGPRS(): %d"), network_status);
   if (network_status == GSM3_NetworkStatus_t::ERROR)
   {

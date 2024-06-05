@@ -55,14 +55,6 @@ class CatM1ConnectionHandler : public ConnectionHandler
 
   private:
 
-    const char * _pin;
-    const char * _apn;
-    const char * _login;
-    const char * _pass;
-
-    RadioAccessTechnologyType _rat;
-    uint32_t _band;
-
     GSMUDP _gsm_udp;
     GSMClient _gsm_client;
 };

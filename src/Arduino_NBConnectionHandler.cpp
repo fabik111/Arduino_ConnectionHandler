@@ -59,12 +59,12 @@ NBConnectionHandler::NBConnectionHandler(char const * pin, char const * apn, boo
 
 NBConnectionHandler::NBConnectionHandler(char const * pin, char const * apn, char const * login, char const * pass, bool const keep_alive)
 : ConnectionHandler{keep_alive, NetworkAdapter::NB}
-, _pin(pin)
-, _apn(apn)
-, _login(login)
-, _pass(pass)
 {
-
+  _settings.type = NetworkAdapter::NB;
+  strcpy(_settings.values.nb.pin, pin);
+  strcpy(_settings.values.nb.apn, apn);
+  strcpy(_settings.values.nb.login, login);
+  strcpy(_settings.values.nb.pass, pass);
 }
 
 /******************************************************************************
@@ -84,7 +84,10 @@ NetworkConnectionState NBConnectionHandler::update_handleInit()
 {
   mkr_nb_feed_watchdog();
 
-  if (_nb.begin(_pin, _apn, _login, _pass) == NB_READY)
+  if (_nb.begin(_settings.values.nb.pin,
+                _settings.values.nb.apn,
+                _settings.values.nb.login,
+                _settings.values.nb.pass) == NB_READY)
   {
     Debug.print(DBG_INFO, F("SIM card ok"));
     _nb.setTimeout(NB_TIMEOUT);

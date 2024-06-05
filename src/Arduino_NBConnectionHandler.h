@@ -59,11 +59,6 @@ class NBConnectionHandler : public ConnectionHandler
 
     void changeConnectionState(NetworkConnectionState _newState);
 
-    char const * _pin;
-    char const * _apn;
-    char const * _login;
-    char const * _pass;
-
     NB _nb;
     GPRS _nb_gprs;
     NBUDP _nb_udp;
