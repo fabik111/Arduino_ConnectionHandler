@@ -80,10 +80,6 @@ class WiFiConnectionHandler : public ConnectionHandler
     virtual NetworkConnectionState update_handleDisconnected () override;
 
   private:
-
-    char const * _ssid;
-    char const * _pass;
-
     WiFiUDP _wifi_udp;
     WiFiClient _wifi_client;
 };

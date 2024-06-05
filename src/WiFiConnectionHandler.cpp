@@ -37,10 +37,10 @@ static int const ESP_WIFI_CONNECTION_TIMEOUT = 3000;
 
 WiFiConnectionHandler::WiFiConnectionHandler(char const * ssid, char const * pass, bool const keep_alive)
 : ConnectionHandler{keep_alive, NetworkAdapter::WIFI}
-, _ssid{ssid}
-, _pass{pass}
 {
-
+  _settings.type = NetworkAdapter::WIFI;
+  strcpy(_settings.values.wifi.ssid, ssid);
+  strcpy(_settings.values.wifi.pwd, pass);
 }
 
 /******************************************************************************
@@ -99,7 +99,7 @@ NetworkConnectionState WiFiConnectionHandler::update_handleConnecting()
 {
   if (WiFi.status() != WL_CONNECTED)
   {
-    WiFi.begin(_ssid, _pass);
+    WiFi.begin(_settings.values.wifi.ssid, _settings.values.wifi.pwd);
 #if defined(ARDUINO_ARCH_ESP8266)
     /* Wait connection otherwise board won't connect */
     unsigned long start = millis();
@@ -113,7 +113,7 @@ NetworkConnectionState WiFiConnectionHandler::update_handleConnecting()
   if (WiFi.status() != NETWORK_CONNECTED)
   {
 #if !defined(__AVR__)
-    Debug.print(DBG_ERROR, F("Connection to \"%s\" failed"), _ssid);
+    Debug.print(DBG_ERROR, F("Connection to \"%s\" failed"), _settings.values.wifi.ssid);
     Debug.print(DBG_INFO, F("Retrying in  \"%d\" milliseconds"), CHECK_INTERVAL_TABLE[static_cast<unsigned int>(NetworkConnectionState::CONNECTING)]);
 #endif
     return NetworkConnectionState::CONNECTING;
@@ -121,7 +121,7 @@ NetworkConnectionState WiFiConnectionHandler::update_handleConnecting()
   else
   {
 #if !defined(__AVR__)
-    Debug.print(DBG_INFO, F("Connected to \"%s\""), _ssid);
+    Debug.print(DBG_INFO, F("Connected to \"%s\""), _settings.values.wifi.ssid);
 #endif
 #if defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ARCH_ESP32)
   configTime(0, 0, "time.arduino.cc", "pool.ntp.org", "time.nist.gov");
@@ -136,7 +136,7 @@ NetworkConnectionState WiFiConnectionHandler::update_handleConnected()
   {
 #if !defined(__AVR__)
     Debug.print(DBG_VERBOSE, F("WiFi.status(): %d"), WiFi.status());
-    Debug.print(DBG_ERROR, F("Connection to \"%s\" lost."), _ssid);
+    Debug.print(DBG_ERROR, F("Connection to \"%s\" lost."), _settings.values.wifi.ssid);
 #endif
     if (_keep_alive)
     {

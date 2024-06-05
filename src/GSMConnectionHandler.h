@@ -59,11 +59,6 @@ class GSMConnectionHandler : public ConnectionHandler
 
   private:
 
-    const char * _pin;
-    const char * _apn;
-    const char * _login;
-    const char * _pass;
-
     GSM _gsm;
     GPRS _gprs;
     GSMUDP _gsm_udp;
