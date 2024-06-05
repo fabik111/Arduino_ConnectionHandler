@@ -49,16 +49,13 @@ namespace models {
   struct LoraSetting {
     char          appeui[17];    // appeui is 8 octets * 2 (hex format) + \0
     char          appkey[33];    // appeui is 16 octets * 2 (hex format) + \0
-    _lora_band    band;
-    char          channelMask[33]; // 
-    _lora_class   deviceClass;
   };
 
   struct NetworkSetting {
     NetworkAdapter type;
     union {
       WiFiSetting   wifi;
-      CatM1Setting  catM1;
+      CATM1Setting  catM1;
       GSMSetting    gsm;
       NBSetting     nb;
       LoraSetting   lora;
