@@ -29,6 +29,7 @@
 #include <Client.h>
 #include <Udp.h>
 #include "Arduino_ConnectionHandlerDefinitions.h"
+#include "settings/settings.h"
 
 /******************************************************************************
    TYPEDEFS
@@ -76,6 +77,17 @@ class ConnectionHandler {
     void addDisconnectCallback(OnNetworkEventCallback callback) __attribute__((deprecated));
     void addErrorCallback(OnNetworkEventCallback callback) __attribute__((deprecated));
 
+    /**
+     * Update the interface settings. This can be performed only when the interface is
+     * in INIT state. otherwise nothing is performed. The type of the interface should match
+     * the type of the settings provided
+     */
+    inline void updateSetting(const models::NetworkSetting& s) {
+      if(_current_net_connection_state == NetworkConnectionState::INIT && s.type == _interface) {
+        memcpy(&_settings, &s, sizeof(s));
+      }
+    }
+
   protected:
 
     bool _keep_alive;
@@ -87,6 +99,7 @@ class ConnectionHandler {
     virtual NetworkConnectionState update_handleDisconnecting() = 0;
     virtual NetworkConnectionState update_handleDisconnected () = 0;
 
+    models::NetworkSetting _settings;
 
   private:
 
