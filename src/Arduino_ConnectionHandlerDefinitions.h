@@ -173,7 +173,7 @@ enum class NetworkAdapter {
 static unsigned int const CHECK_INTERVAL_TABLE[] =
 {
   /* INIT          */ 100,
-#if defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ARCH_ESP32)
+#if defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ARCH_ESP32) || defined(ARDUINO_UNOR4_WIFI)
   /* CONNECTING    */ 4000,
 #else
   /* CONNECTING    */ 500,
