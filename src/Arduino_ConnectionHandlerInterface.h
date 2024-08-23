@@ -83,8 +83,9 @@ class ConnectionHandler {
      * the type of the settings provided
      */
     inline void updateSetting(const models::NetworkSetting& s) {
-      if(_current_net_connection_state == NetworkConnectionState::INIT && s.type == _interface) {
+      if(/*_current_net_connection_state == NetworkConnectionState::INIT &&*/ s.type == _interface) {
         memcpy(&_settings, &s, sizeof(s));
+        _settingsConfigured = true;
       }
     }
 
@@ -100,6 +101,7 @@ class ConnectionHandler {
     virtual NetworkConnectionState update_handleDisconnected () = 0;
 
     models::NetworkSetting _settings;
+    bool _settingsConfigured = false;
 
   private:
 

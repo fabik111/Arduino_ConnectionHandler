@@ -55,7 +55,7 @@
 class WiFiConnectionHandler : public ConnectionHandler
 {
   public:
-
+    WiFiConnectionHandler(bool const keep_alive = true);
     WiFiConnectionHandler(char const * ssid, char const * pass, bool const keep_alive = true);
 
 

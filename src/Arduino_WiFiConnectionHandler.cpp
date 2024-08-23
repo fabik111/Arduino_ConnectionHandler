@@ -34,6 +34,7 @@ static int const ESP_WIFI_CONNECTION_TIMEOUT = 3000;
 /******************************************************************************
    CTOR/DTOR
  ******************************************************************************/
+WiFiConnectionHandler::WiFiConnectionHandler(bool const keep_alive): ConnectionHandler{keep_alive, NetworkAdapter::WIFI} {}
 
 WiFiConnectionHandler::WiFiConnectionHandler(char const * ssid, char const * pass, bool const keep_alive)
 : ConnectionHandler{keep_alive, NetworkAdapter::WIFI}
@@ -41,6 +42,7 @@ WiFiConnectionHandler::WiFiConnectionHandler(char const * ssid, char const * pas
   _settings.type = NetworkAdapter::WIFI;
   strcpy(_settings.values.wifi.ssid, ssid);
   strcpy(_settings.values.wifi.pwd, pass);
+  _settingsConfigured = true;
 }
 
 /******************************************************************************
@@ -97,7 +99,7 @@ NetworkConnectionState WiFiConnectionHandler::update_handleInit()
 
 NetworkConnectionState WiFiConnectionHandler::update_handleConnecting()
 {
-  if (WiFi.status() != WL_CONNECTED)
+  if (WiFi.status() != WL_CONNECTED && _settingsConfigured)
   {
     WiFi.begin(_settings.values.wifi.ssid, _settings.values.wifi.pwd);
 #if defined(ARDUINO_ARCH_ESP8266)
