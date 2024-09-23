@@ -83,7 +83,7 @@ class ConnectionHandler {
      * in INIT state. otherwise nothing is performed. The type of the interface should match
      * the type of the settings provided
      */
-    inline void updateSetting(const models::NetworkSetting& s) {
+    virtual void updateSetting(const models::NetworkSetting& s) {
       if(_current_net_connection_state == NetworkConnectionState::INIT && s.type == _interface) {
         memcpy(&_settings, &s, sizeof(s));
       }
@@ -100,11 +100,8 @@ class ConnectionHandler {
     virtual NetworkConnectionState update_handleDisconnecting() = 0;
     virtual NetworkConnectionState update_handleDisconnected () = 0;
 
-<<<<<<< HEAD:src/ConnectionHandlerInterface.h
-=======
     models::NetworkSetting _settings;
 
->>>>>>> 8ee4dcd (readapting ConnectionHandlerInterface to use setting struct):src/Arduino_ConnectionHandlerInterface.h
   private:
 
     unsigned long _lastConnectionTickTime;
