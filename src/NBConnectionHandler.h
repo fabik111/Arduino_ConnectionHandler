@@ -39,7 +39,7 @@
 class NBConnectionHandler : public ConnectionHandler
 {
   public:
-
+    NBConnectionHandler();
     NBConnectionHandler(char const * pin, bool const keep_alive = true);
     NBConnectionHandler(char const * pin, char const * apn, bool const keep_alive = true);
     NBConnectionHandler(char const * pin, char const * apn, char const * login, char const * pass, bool const keep_alive = true);

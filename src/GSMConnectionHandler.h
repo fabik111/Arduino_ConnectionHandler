@@ -39,7 +39,7 @@
 class GSMConnectionHandler : public ConnectionHandler
 {
   public:
-
+    GSMConnectionHandler();
     GSMConnectionHandler(const char * pin, const char * apn, const char * login, const char * pass, bool const keep_alive = true);
 
 
