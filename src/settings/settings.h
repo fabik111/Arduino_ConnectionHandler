@@ -17,7 +17,7 @@
 
 #pragma once
 
-#include "Arduino_ConnectionHandlerDefinitions.h"
+#include "ConnectionHandlerDefinitions.h"
 #include <stdint.h>
 
 namespace models {
@@ -27,10 +27,10 @@ namespace models {
   };
 
   struct EthernetSetting {
-    IPAddress     ip;
-    IPAddress     dns;
-    IPAddress     gateway;
-    IPAddress     netmask;
+    uint32_t     ip;
+    uint32_t     dns;
+    uint32_t     gateway;
+    uint32_t     netmask;
     unsigned long timeout;
     unsigned long response_timeout;
   };
@@ -54,11 +54,12 @@ namespace models {
   struct NetworkSetting {
     NetworkAdapter type;
     union {
-      WiFiSetting   wifi;
-      CATM1Setting  catM1;
-      GSMSetting    gsm;
-      NBSetting     nb;
-      LoraSetting   lora;
-    } values;
+      WiFiSetting     wifi;
+      CATM1Setting    catM1;
+      GSMSetting      gsm;
+      NBSetting       nb;
+      EthernetSetting eth;
+      LoraSetting     lora;
+    };
   };
 }
