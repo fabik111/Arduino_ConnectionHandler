@@ -16,77 +16,90 @@
    INCLUDE
  ******************************************************************************/
 
-#include "Arduino_ConnectionHandler.h"
 #include "GenericConnectionHandler.h"
+#include "Arduino_ConnectionHandler.h"
 
 void GenericConnectionHandler::updateSetting(const models::NetworkSetting& s) {
 
     switch(s.type) {
-        #if defined(BOARD_HAS_WIFI)
-        case WIFI:
-            _ch = new WiFiConnectionHandler();
-            break;
-        #endif
+        // #if defined(BOARD_HAS_WIFI)
+        // case NetworkAdapter::WIFI:
+        //     _ch = new WiFiConnectionHandler();
+        //     break;
+        // #endif
 
         #if defined(BOARD_HAS_ETHERNET)
-        case ETHERNET:
+        case NetworkAdapter::ETHERNET:
             _ch = new EthernetConnectionHandler();
             break;
         #endif
 
-        #if defined(BOARD_HAS_NB)
-        case NB:
-            _ch = new NBConnectionHandler();
-            break;
-        #endif
+        // #if defined(BOARD_HAS_NB)
+        // case NetworkAdapter::NB:
+        //     _ch = new NBConnectionHandler();
+        //     break;
+        // #endif
 
-        #if defined(BOARD_HAS_GSM)
-        case GSM:
-            _ch = new GSMConnectionHandler();
-            break;
-        #endif
+        // #if defined(BOARD_HAS_GSM)
+        // case NetworkAdapter::GSM:
+        //     _ch = new GSMConnectionHandler();
+        //     break;
+        // #endif
 
-        #if defined(BOARD_HAS_CATM1_NBIOT)
-        case CATM1:
-            _ch = new CatM1ConnectionHandler();
-            break;
-        #endif
+        // #if defined(BOARD_HAS_CATM1_NBIOT)
+        // case NetworkAdapter::CATM1:
+        //     _ch = new CatM1ConnectionHandler();
+        //     break;
+        // #endif
 
-        #if defined(BOARD_HAS_CELLULAR)
-        case CELL:
-            _ch = new CellularConnectionHandler();
-            break;
-        #endif
+        // #if defined(BOARD_HAS_CELLULAR)
+        // case NetworkAdapter::CELL:
+        //     _ch = new CellularConnectionHandler();
+        //     break;
+        // #endif
 
-        #if defined(BOARD_HAS_NOTECARD) // FIXME understand how to adapt it to the settings structure
-        case NOTECARD:
-            _ch = new NotecardConnectionHandler();
-            break;
-        #endif
+        // #if defined(BOARD_HAS_NOTECARD) // FIXME understand how to adapt it to the settings structure
+        // case NOTECARD:
+        //     _ch = new NotecardConnectionHandler();
+        //     break;
+        // #endif
 
         default:
             Debug.print(DBG_ERROR, "Network adapter not supported by this platform: %d", s.type);
             return;
     }
+    _interface = s.type;
     _ch->updateSetting(s);
 }
 
 NetworkConnectionState GenericConnectionHandler::update_handleInit() {
-    return _ch != nullptr ? _ch->update_handleInit() : INIT;
+    return _ch != nullptr ? _ch->update_handleInit() : NetworkConnectionState::INIT;
 }
 
-NetworkConnectionState GenericConnectionHandler::update_handleDisconnecting() {
-    return _ch != nullptr ? _ch->update_handleDisconnecting() : INIT;
+NetworkConnectionState GenericConnectionHandler::update_handleConnecting() {
+    return _ch != nullptr ? _ch->update_handleConnecting() : NetworkConnectionState::INIT;
 }
 
 NetworkConnectionState GenericConnectionHandler::update_handleConnected() {
-    return _ch != nullptr ? _ch->update_handleConnected() : INIT;
+    return _ch != nullptr ? _ch->update_handleConnected() : NetworkConnectionState::INIT;
 }
 
 NetworkConnectionState GenericConnectionHandler::update_handleDisconnecting() {
-    return _ch != nullptr ? _ch->update_handleDisconnecting() : INIT;
+    return _ch != nullptr ? _ch->update_handleDisconnecting() : NetworkConnectionState::INIT;
 }
 
 NetworkConnectionState GenericConnectionHandler::update_handleDisconnected() {
-    return _ch != nullptr ? _ch->update_handleDisconnected() : INIT;
+    return _ch != nullptr ? _ch->update_handleDisconnected() : NetworkConnectionState::INIT;
+}
+
+unsigned long GenericConnectionHandler::getTime() { // FIXME _ch may be nullptr
+    return _ch->getTime();
+}
+
+Client & GenericConnectionHandler::getClient() { // FIXME _ch may be nullptr
+    return _ch->getClient();
+}
+
+UDP & GenericConnectionHandler::getUDP() { // FIXME _ch may be nullptr
+    return _ch->getUDP();
 }
