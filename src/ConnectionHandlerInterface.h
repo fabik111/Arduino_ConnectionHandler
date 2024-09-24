@@ -41,10 +41,13 @@ typedef void (*OnNetworkEventCallback)();
    CLASS DECLARATION
  ******************************************************************************/
 
+// forward declaration FIXME
+class GenericConnectionHandler;
+
 class ConnectionHandler {
   public:
 
-    ConnectionHandler(bool const keep_alive, NetworkAdapter interface);
+    ConnectionHandler(bool const keep_alive=false, NetworkAdapter interface=NetworkAdapter::NONE);
 
 
     NetworkConnectionState check();
@@ -109,5 +112,7 @@ class ConnectionHandler {
     OnNetworkEventCallback  _on_connect_event_callback = NULL,
                             _on_disconnect_event_callback = NULL,
                             _on_error_event_callback = NULL;
+
+    friend GenericConnectionHandler;
 };
 
