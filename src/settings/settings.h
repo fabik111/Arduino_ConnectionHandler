@@ -44,7 +44,15 @@ namespace models {
 
   typedef CellularSetting GSMSetting;
   typedef CellularSetting NBSetting;
-  typedef CellularSetting CATM1Setting;
+
+  struct CATM1Setting {
+    char      pin[8];
+    char      apn[101]; // Max length of apn is 100 + \0
+    char      login[32];
+    char      pass[32];
+    int       rat; // FIXME verify this type is correct
+    uint32_t  band;
+  };
 
   struct LoraSetting {
     char          appeui[17];    // appeui is 8 octets * 2 (hex format) + \0
@@ -54,12 +62,33 @@ namespace models {
   struct NetworkSetting {
     NetworkAdapter type;
     union {
+      #if defined(BOARD_HAS_WIFI)
       WiFiSetting     wifi;
-      CATM1Setting    catM1;
-      GSMSetting      gsm;
-      NBSetting       nb;
+      #endif
+
+      #if defined(BOARD_HAS_ETHERNET)
       EthernetSetting eth;
+      #endif
+
+      #if defined(BOARD_HAS_NB)
+      NBSetting       nb;
+      #endif
+
+      #if defined(BOARD_HAS_GSM)
+      GSMSetting      gsm;
+      #endif
+
+      #if defined(BOARD_HAS_CATM1_NBIOT)
+      CATM1Setting    catm1;
+      #endif
+
+      #if defined(BOARD_HAS_CELLULAR)
+      CellularSetting cell;
+      #endif
+
+      #if defined(BOARD_HAS_LORA)
       LoraSetting     lora;
+      #endif
     };
   };
 }
