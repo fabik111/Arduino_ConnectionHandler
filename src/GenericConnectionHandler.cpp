@@ -20,13 +20,13 @@
 #include "Arduino_ConnectionHandler.h"
 
 void GenericConnectionHandler::updateSetting(const models::NetworkSetting& s) {
-
+    // FIXME do not allocate a conn handler when update settings cannot work
     switch(s.type) {
-        // #if defined(BOARD_HAS_WIFI)
-        // case NetworkAdapter::WIFI:
-        //     _ch = new WiFiConnectionHandler();
-        //     break;
-        // #endif
+        #if defined(BOARD_HAS_WIFI)
+        case NetworkAdapter::WIFI:
+            _ch = new WiFiConnectionHandler();
+            break;
+        #endif
 
         #if defined(BOARD_HAS_ETHERNET)
         case NetworkAdapter::ETHERNET:
@@ -34,29 +34,29 @@ void GenericConnectionHandler::updateSetting(const models::NetworkSetting& s) {
             break;
         #endif
 
-        // #if defined(BOARD_HAS_NB)
-        // case NetworkAdapter::NB:
-        //     _ch = new NBConnectionHandler();
-        //     break;
-        // #endif
+        #if defined(BOARD_HAS_NB)
+        case NetworkAdapter::NB:
+            _ch = new NBConnectionHandler();
+            break;
+        #endif
 
-        // #if defined(BOARD_HAS_GSM)
-        // case NetworkAdapter::GSM:
-        //     _ch = new GSMConnectionHandler();
-        //     break;
-        // #endif
+        #if defined(BOARD_HAS_GSM)
+        case NetworkAdapter::GSM:
+            _ch = new GSMConnectionHandler();
+            break;
+        #endif
 
-        // #if defined(BOARD_HAS_CATM1_NBIOT)
-        // case NetworkAdapter::CATM1:
-        //     _ch = new CatM1ConnectionHandler();
-        //     break;
-        // #endif
+        #if defined(BOARD_HAS_CATM1_NBIOT)
+        case NetworkAdapter::CATM1:
+            _ch = new CatM1ConnectionHandler();
+            break;
+        #endif
 
-        // #if defined(BOARD_HAS_CELLULAR)
-        // case NetworkAdapter::CELL:
-        //     _ch = new CellularConnectionHandler();
-        //     break;
-        // #endif
+        #if defined(BOARD_HAS_CELLULAR)
+        case NetworkAdapter::CELL:
+            _ch = new CellularConnectionHandler();
+            break;
+        #endif
 
         // #if defined(BOARD_HAS_NOTECARD) // FIXME understand how to adapt it to the settings structure
         // case NOTECARD:

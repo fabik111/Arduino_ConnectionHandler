@@ -15,8 +15,8 @@
    a commercial license, send an email to license@arduino.cc.
 */
 
-#ifndef ARDUINO_WIFI_CONNECTION_HANDLER_H_
-#define ARDUINO_WIFI_CONNECTION_HANDLER_H_
+#ifndef ARDUINO_GENERIC_CONNECTION_HANDLER_H_
+#define ARDUINO_GENERIC_CONNECTION_HANDLER_H_
 
 /******************************************************************************
    INCLUDE
@@ -57,4 +57,4 @@ class GenericConnectionHandler : public ConnectionHandler
     ConnectionHandler* _ch;
 };
 
-#endif /* ARDUINO_WIFI_CONNECTION_HANDLER_H_ */
+#endif /* ARDUINO_GENERIC_CONNECTION_HANDLER_H_ */
