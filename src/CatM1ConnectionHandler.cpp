@@ -28,16 +28,21 @@
    CTOR/DTOR
  ******************************************************************************/
 
-CatM1ConnectionHandler::CatM1ConnectionHandler(const char * pin, const char * apn, const char * login, const char * pass, RadioAccessTechnologyType rat, uint32_t band, bool const keep_alive)
+CatM1ConnectionHandler::CatM1ConnectionHandler()
+: ConnectionHandler(false, NetworkAdapter::CATM1) { }
+
+CatM1ConnectionHandler::CatM1ConnectionHandler(
+  const char * pin, const char * apn, const char * login, const char * pass,
+  RadioAccessTechnologyType rat, uint32_t band, bool const keep_alive)
 : ConnectionHandler{keep_alive, NetworkAdapter::CATM1}
 {
   _settings.type = NetworkAdapter::CATM1;
-  strcpy(_settings.values.catm1.pin, pin);
-  strcpy(_settings.values.catm1.apn, apn);
-  strcpy(_settings.values.catm1.login, login);
-  strcpy(_settings.values.catm1.pass, pass);
-  _settings.values.catm1.rat  = rat
-  _settings.values.catm1.band = band;
+  strcpy(_settings.catm1.pin, pin);
+  strcpy(_settings.catm1.apn, apn);
+  strcpy(_settings.catm1.login, login);
+  strcpy(_settings.catm1.pass, pass);
+  _settings.catm1.rat  = static_cast<int>(rat);
+  _settings.catm1.band = band;
 }
 
 /******************************************************************************
@@ -65,12 +70,12 @@ NetworkConnectionState CatM1ConnectionHandler::update_handleInit()
 NetworkConnectionState CatM1ConnectionHandler::update_handleConnecting()
 {
   if(!GSM.begin(
-    _settings.values.catm1.pin,
-    _settings.values.catm1.apn,
-    _settings.values.catm1.login,
-    _settings.values.catm1.pass,
-    _settings.values.catm1.rat,
-    _settings.values.catm1.band))
+    _settings.catm1.pin,
+    _settings.catm1.apn,
+    _settings.catm1.login,
+    _settings.catm1.pass,
+    static_cast<RadioAccessTechnologyType>(_settings.catm1.rat) ,
+    _settings.catm1.band))
   {
     Debug.print(DBG_ERROR, F("The board was not able to register to the network..."));
     return NetworkConnectionState::ERROR;

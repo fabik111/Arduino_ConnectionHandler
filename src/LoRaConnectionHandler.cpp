@@ -48,11 +48,11 @@ LoRaConnectionHandler::LoRaConnectionHandler(char const * appeui, char const * a
 : ConnectionHandler{false, NetworkAdapter::LORA}
 {
   _settings.type = NetworkAdapter::LORA;
-  strcpy(_settings.values.lora.appeui, appeui);
-  strcpy(_settings.values.lora.appkey, appkey);
-  _settings.values.lora.band = band;
-  strcpy(_settings.values.lora.channelMask, channelMask);
-  _settings.values.lora.deviceClass = device_class;
+  strcpy(_settings.lora.appeui, appeui);
+  strcpy(_settings.lora.appkey, appkey);
+  _settings.lora.band = band;
+  strcpy(_settings.lora.channelMask, channelMask);
+  _settings.lora.deviceClass = device_class;
 }
 
 /******************************************************************************
@@ -103,18 +103,18 @@ bool LoRaConnectionHandler::available()
 
 NetworkConnectionState LoRaConnectionHandler::update_handleInit()
 {
-  if (!_modem.begin(_settings.values.lora.band))
+  if (!_modem.begin(_settings.lora.band))
   {
     Debug.print(DBG_ERROR, F("Something went wrong; are you indoor? Move near a window, then reset and retry."));
     return NetworkConnectionState::ERROR;
   }
   // Set channelmask based on configuration
-  if (_settings.values.lora.channelMask) {
-    _modem.sendMask(_settings.values.lora.channelMask);
+  if (_settings.lora.channelMask) {
+    _modem.sendMask(_settings.lora.channelMask);
   }
   //A delay is required between _modem.begin(band) and _modem.joinOTAA(appeui, appkey) in order to let the chip to be correctly initialized before the connection attempt
   delay(100);
-  _modem.configureClass(_settings.values.lora.deviceClass);
+  _modem.configureClass(_settings.lora.deviceClass);
   delay(100);
   Debug.print(DBG_INFO, F("Connecting to the network"));
   return NetworkConnectionState::CONNECTING;
@@ -122,7 +122,7 @@ NetworkConnectionState LoRaConnectionHandler::update_handleInit()
 
 NetworkConnectionState LoRaConnectionHandler::update_handleConnecting()
 {
-  bool const network_status = _modem.joinOTAA(_settings.values.lora.appeui, _settings.values.lora.appkey);
+  bool const network_status = _modem.joinOTAA(_settings.lora.appeui, _settings.lora.appkey);
   if (network_status != true)
   {
     Debug.print(DBG_ERROR, F("Connection to the network failed"));

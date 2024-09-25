@@ -25,51 +25,52 @@
    CTOR/DTOR
  ******************************************************************************/
 
+// FIXME
 EthernetConnectionHandler::EthernetConnectionHandler(unsigned long const timeout, unsigned long const responseTimeout, bool const keep_alive)
 : ConnectionHandler{keep_alive, NetworkAdapter::ETHERNET}
-,_ip{INADDR_NONE}
-,_dns{INADDR_NONE}
-,_gateway{INADDR_NONE}
-,_netmask{INADDR_NONE}
-,_timeout{timeout}
-,_response_timeout{responseTimeout}
+// ,_ip{INADDR_NONE}
+// ,_dns{INADDR_NONE}
+// ,_gateway{INADDR_NONE}
+// ,_netmask{INADDR_NONE}
+// ,_timeout{timeout}
+// ,_response_timeout{responseTimeout}
 {
 
 }
 
 EthernetConnectionHandler::EthernetConnectionHandler(const IPAddress ip, const IPAddress dns, const IPAddress gateway, const IPAddress netmask, unsigned long const timeout, unsigned long const responseTimeout, bool const keep_alive)
 : ConnectionHandler{keep_alive, NetworkAdapter::ETHERNET}
-,_ip{ip}
-,_dns{dns}
-,_gateway{gateway}
-,_netmask{netmask}
-,_timeout{timeout}
-,_response_timeout{responseTimeout}
+// ,_ip{ip}
+// ,_dns{dns}
+// ,_gateway{gateway}
+// ,_netmask{netmask}
+// ,_timeout{timeout}
+// ,_response_timeout{responseTimeout}
 {
 
 }
 
 EthernetConnectionHandler::EthernetConnectionHandler(const char * ip, const char * dns, const char * gateway, const char * netmask, unsigned long const timeout, unsigned long const responseTimeout, bool const keep_alive)
 : ConnectionHandler{keep_alive, NetworkAdapter::ETHERNET}
-,_ip{INADDR_NONE}
-,_dns{INADDR_NONE}
-,_gateway{INADDR_NONE}
-,_netmask{INADDR_NONE}
-,_timeout{timeout}
-,_response_timeout{responseTimeout}
+// ,_ip{INADDR_NONE}
+// ,_dns{INADDR_NONE}
+// ,_gateway{INADDR_NONE}
+// ,_netmask{INADDR_NONE}
+// ,_timeout{timeout}
+// ,_response_timeout{responseTimeout}
 {
-  if(!_ip.fromString(ip)) {
-    _ip = INADDR_NONE;
-  }
-  if(!_dns.fromString(dns)) {
-    _dns = INADDR_NONE;
-  }
-  if(!_gateway.fromString(gateway)) {
-    _gateway = INADDR_NONE;
-  }
-  if(!_netmask.fromString(netmask)) {
-    _netmask = INADDR_NONE;
-  }
+//   if(!_ip.fromString(ip)) {
+//     _ip = INADDR_NONE;
+//   }
+//   if(!_dns.fromString(dns)) {
+//     _dns = INADDR_NONE;
+//   }
+//   if(!_gateway.fromString(gateway)) {
+//     _gateway = INADDR_NONE;
+//   }
+//   if(!_netmask.fromString(netmask)) {
+//     _netmask = INADDR_NONE;
+//   }
 }
 
 /******************************************************************************
@@ -87,16 +88,24 @@ NetworkConnectionState EthernetConnectionHandler::update_handleInit()
 
 NetworkConnectionState EthernetConnectionHandler::update_handleConnecting()
 {
-  if (_ip != INADDR_NONE) {
-    if (Ethernet.begin(nullptr, _ip, _dns, _gateway, _netmask, _timeout, _response_timeout) == 0) {
+  if (_settings.eth.ip != INADDR_NONE) {
+    if (Ethernet.begin(nullptr,
+        _settings.eth.ip,
+        _settings.eth.dns,
+        _settings.eth.gateway,
+        _settings.eth.netmask,
+        _settings.eth.timeout,
+        _settings.eth.response_timeout) == 0) {
       Debug.print(DBG_ERROR, F("Failed to configure Ethernet, check cable connection"));
-      Debug.print(DBG_VERBOSE, "timeout: %d, response timeout: %d", _timeout, _response_timeout);
+      Debug.print(DBG_VERBOSE, "timeout: %d, response timeout: %d",
+        _settings.eth.timeout, _settings.eth.response_timeout);
       return NetworkConnectionState::CONNECTING;
     }
   } else {
-    if (Ethernet.begin(nullptr, _timeout, _response_timeout) == 0) {
+    if (Ethernet.begin(nullptr, _settings.eth.timeout, _settings.eth.response_timeout) == 0) {
       Debug.print(DBG_ERROR, F("Waiting Ethernet configuration from DHCP server, check cable connection"));
-      Debug.print(DBG_VERBOSE, "timeout: %d, response timeout: %d", _timeout, _response_timeout);
+      Debug.print(DBG_VERBOSE, "timeout: %d, response timeout: %d",
+        _settings.eth.timeout, _settings.eth.response_timeout);
       return NetworkConnectionState::CONNECTING;
     }
   }
