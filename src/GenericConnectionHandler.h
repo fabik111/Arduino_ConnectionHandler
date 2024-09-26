@@ -38,9 +38,15 @@ class GenericConnectionHandler : public ConnectionHandler
 
     GenericConnectionHandler(): _ch(nullptr) {}
 
-    unsigned long getTime() override;
-    Client & getClient() override;
-    UDP & getUDP() override;
+    #if defined(BOARD_HAS_NOTECARD) || defined(BOARD_HAS_LORA)
+      virtual bool available() = 0;
+      virtual int read() = 0;
+      virtual int write(const uint8_t *buf, size_t size) = 0;
+    #else
+      unsigned long getTime() override;
+      Client & getClient() override;
+      UDP & getUDP() override;
+    #endif
 
     bool updateSetting(const models::NetworkSetting& s) override;
 
