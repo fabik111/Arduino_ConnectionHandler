@@ -85,11 +85,16 @@ class ConnectionHandler {
      * Update the interface settings. This can be performed only when the interface is
      * in INIT state. otherwise nothing is performed. The type of the interface should match
      * the type of the settings provided
+     *
+     * @return true if the update is successfull, false otherwise
      */
-    virtual void updateSetting(const models::NetworkSetting& s) {
+    virtual bool updateSetting(const models::NetworkSetting& s) {
       if(_current_net_connection_state == NetworkConnectionState::INIT && s.type == _interface) {
         memcpy(&_settings, &s, sizeof(s));
+        return true;
       }
+
+      return false;
     }
 
   protected:
