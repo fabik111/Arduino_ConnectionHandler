@@ -26,11 +26,22 @@ namespace models {
     char pwd[64];  // Max length of password is 63 + \0
   };
 
+  // this struct represents an ip address in its simplest form.
+  // TODO should this stay here?
+  // TODO it may be better to check for IPV6 compatibility to reduce size
+  struct ip_addr {
+    IPType type;
+    union {
+        uint8_t bytes[16];
+        uint32_t dword[4];
+    };
+  };
+
   struct EthernetSetting {
-    uint32_t     ip;
-    uint32_t     dns;
-    uint32_t     gateway;
-    uint32_t     netmask;
+    ip_addr       ip;
+    ip_addr       dns;
+    ip_addr       gateway;
+    ip_addr       netmask;
     unsigned long timeout;
     unsigned long response_timeout;
   };
