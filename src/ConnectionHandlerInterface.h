@@ -86,7 +86,7 @@ class ConnectionHandler {
      * in INIT state. otherwise nothing is performed. The type of the interface should match
      * the type of the settings provided
      *
-     * @return true if the update is successfull, false otherwise
+     * @return true if the update is successful, false otherwise
      */
     virtual bool updateSetting(const models::NetworkSetting& s) {
       if(_current_net_connection_state == NetworkConnectionState::INIT && s.type == _interface) {
