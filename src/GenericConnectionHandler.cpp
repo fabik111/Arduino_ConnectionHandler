@@ -92,7 +92,7 @@ NetworkConnectionState GenericConnectionHandler::update_handleDisconnected() {
     return _ch != nullptr ? _ch->update_handleDisconnected() : NetworkConnectionState::INIT;
 }
 
-#if not defined(BOARD_HAS_LORA)
+#if not (defined(BOARD_HAS_LORA) or defined(BOARD_HAS_NOTECARD))
 unsigned long GenericConnectionHandler::getTime() { // FIXME _ch may be nullptr
     return _ch->getTime();
 }
@@ -104,4 +104,5 @@ Client & GenericConnectionHandler::getClient() { // FIXME _ch may be nullptr
 UDP & GenericConnectionHandler::getUDP() { // FIXME _ch may be nullptr
     return _ch->getUDP();
 }
-#endif
+
+#endif // not (defined(BOARD_HAS_LORA) or defined(BOARD_HAS_NOTECARD))
