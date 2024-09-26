@@ -27,6 +27,7 @@ namespace models {
     char pwd[64];  // Max length of password is 63 + \0
   };
 
+  #if defined(BOARD_HAS_ETHERNET)
   // this struct represents an ip address in its simplest form.
   // TODO should this stay here?
   // TODO it may be better to check for IPV6 compatibility to reduce size
@@ -46,6 +47,7 @@ namespace models {
     unsigned long timeout;
     unsigned long response_timeout;
   };
+  #endif // BOARD_HAS_ETHERNET
 
   struct CellularSetting {
     char pin[8];
