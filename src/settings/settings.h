@@ -19,6 +19,7 @@
 
 #include "ConnectionHandlerDefinitions.h"
 #include <stdint.h>
+#include <IPAddress.h>
 
 namespace models {
   struct WiFiSetting {
