@@ -68,10 +68,15 @@ namespace models {
     uint32_t  band;
   };
 
+#if defined(BOARD_HAS_LORA)
   struct LoraSetting {
     char          appeui[17];    // appeui is 8 octets * 2 (hex format) + \0
     char          appkey[33];    // appeui is 16 octets * 2 (hex format) + \0
+    uint8_t       band;
+    char          channelMask[13];
+    uint8_t       deviceClass;
   };
+#endif
 
   struct NetworkSetting {
     NetworkAdapter type;
