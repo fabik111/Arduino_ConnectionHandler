@@ -42,7 +42,7 @@ class GenericConnectionHandler : public ConnectionHandler
     Client & getClient() override;
     UDP & getUDP() override;
 
-    void updateSetting(const models::NetworkSetting& s) override;
+    bool updateSetting(const models::NetworkSetting& s) override;
 
   protected:
 
