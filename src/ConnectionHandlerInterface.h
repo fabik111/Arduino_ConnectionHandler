@@ -49,6 +49,7 @@ class ConnectionHandler {
 
     ConnectionHandler(bool const keep_alive=false, NetworkAdapter interface=NetworkAdapter::NONE);
 
+    virtual ~ConnectionHandler() {}
 
     NetworkConnectionState check();
 
@@ -73,10 +74,10 @@ class ConnectionHandler {
       return _interface;
     }
 
-    void connect();
-    void disconnect();
+    virtual void connect();
+    virtual void disconnect();
 
-    void addCallback(NetworkConnectionEvent const event, OnNetworkEventCallback callback);
+    virtual void addCallback(NetworkConnectionEvent const event, OnNetworkEventCallback callback);
     void addConnectCallback(OnNetworkEventCallback callback) __attribute__((deprecated));
     void addDisconnectCallback(OnNetworkEventCallback callback) __attribute__((deprecated));
     void addErrorCallback(OnNetworkEventCallback callback) __attribute__((deprecated));
