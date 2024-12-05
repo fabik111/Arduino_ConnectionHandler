@@ -21,6 +21,8 @@
 /******************************************************************************
    CTOR/DTOR
  ******************************************************************************/
+CellularConnectionHandler::CellularConnectionHandler()
+: ConnectionHandler(false, NetworkAdapter::CELL) {}
 
 CellularConnectionHandler::CellularConnectionHandler(const char * pin, const char * apn, const char * login, const char * pass, bool const keep_alive)
 : ConnectionHandler{keep_alive, NetworkAdapter::CELL}

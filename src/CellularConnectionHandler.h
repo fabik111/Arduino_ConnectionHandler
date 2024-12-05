@@ -33,7 +33,7 @@
 class CellularConnectionHandler : public ConnectionHandler
 {
   public:
-
+    CellularConnectionHandler();
     CellularConnectionHandler(const char * pin, const char * apn, const char * login, const char * pass, bool const keep_alive = true);
 
 
