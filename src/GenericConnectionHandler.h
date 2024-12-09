@@ -44,6 +44,13 @@ class GenericConnectionHandler : public ConnectionHandler
       virtual int write(const uint8_t *buf, size_t size) = 0;
     #else
       unsigned long getTime() override;
+
+      /*
+       * NOTE: The following functions have a huge risk of returning a reference to a non existing memory location
+       * It is important to make sure that the internal connection handler is already allocated before calling them
+       * When updateSettings is called and the internal connectionHandler is reallocated the references to TCP and UDP
+       * handles should be deleted.
+       */
       Client & getClient() override;
       UDP & getUDP() override;
     #endif

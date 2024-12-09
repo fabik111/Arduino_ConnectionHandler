@@ -68,12 +68,12 @@ unsigned long GenericConnectionHandler::getTime() {
     return _ch != nullptr ? _ch->getTime() : 0;
 }
 
-Client & GenericConnectionHandler::getClient() { // FIXME _ch may be nullptr
-    return _ch->getClient();
+Client & GenericConnectionHandler::getClient() {
+    return _ch->getClient(); // NOTE _ch may be nullptr
 }
 
-UDP & GenericConnectionHandler::getUDP() { // FIXME _ch may be nullptr
-    return _ch->getUDP();
+UDP & GenericConnectionHandler::getUDP() {
+    return _ch->getUDP(); // NOTE _ch may be nullptr
 }
 
 #endif // not (defined(BOARD_HAS_LORA) or defined(BOARD_HAS_NOTECARD))
