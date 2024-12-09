@@ -134,12 +134,6 @@ static inline ConnectionHandler* instantiate_handler(NetworkAdapter adapter) {
             break;
         #endif
 
-        // #if defined(BOARD_HAS_NOTECARD) // FIXME understand how to adapt it to the settings structure
-        // case NOTECARD:
-        //     return new NotecardConnectionHandler();
-        //     break;
-        // #endif
-
         default:
             Debug.print(DBG_ERROR, "Network adapter not supported by this platform: %d", adapter);
             return nullptr;
