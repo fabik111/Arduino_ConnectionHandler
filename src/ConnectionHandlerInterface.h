@@ -47,7 +47,7 @@ class GenericConnectionHandler;
 class ConnectionHandler {
   public:
 
-    ConnectionHandler(bool const keep_alive=false, NetworkAdapter interface=NetworkAdapter::NONE);
+    ConnectionHandler(bool const keep_alive=true, NetworkAdapter interface=NetworkAdapter::NONE);
 
     virtual ~ConnectionHandler() {}
 
