@@ -98,6 +98,8 @@ class ConnectionHandler {
       return false;
     }
 
+    virtual void setKeepAlive(bool keep_alive=true) { this->_keep_alive = keep_alive; }
+
   protected:
 
     bool _keep_alive;
