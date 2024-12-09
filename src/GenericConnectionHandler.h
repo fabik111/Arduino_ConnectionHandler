@@ -36,7 +36,7 @@ class GenericConnectionHandler : public ConnectionHandler
 {
   public:
 
-    GenericConnectionHandler(bool const keep_alive=false): ConnectionHandler(keep_alive), _ch(nullptr) {}
+    GenericConnectionHandler(bool const keep_alive=true): ConnectionHandler(keep_alive), _ch(nullptr) {}
 
     #if defined(BOARD_HAS_NOTECARD) || defined(BOARD_HAS_LORA)
       virtual bool available() = 0;
@@ -60,6 +60,8 @@ class GenericConnectionHandler : public ConnectionHandler
     void connect() override;
     void disconnect() override;
     void addCallback(NetworkConnectionEvent const event, OnNetworkEventCallback callback) override;
+
+    void setKeepAlive(bool keep_alive=true) override;
 
   protected:
 

@@ -39,8 +39,15 @@ bool GenericConnectionHandler::updateSetting(const models::NetworkSetting& s) {
         _ch = instantiate_handler(s.type);
     }
 
-    _interface = s.type;
-    return _ch != nullptr ? _ch->updateSetting(s) : false;
+    if(_ch != nullptr) {
+        _interface = s.type;
+        _ch->setKeepAlive(_keep_alive);
+        return _ch->updateSetting(s);
+    } else {
+        _interface = NetworkAdapter::NONE;
+
+        return false;
+    }
 }
 
 NetworkConnectionState GenericConnectionHandler::update_handleInit() {
@@ -93,6 +100,14 @@ void GenericConnectionHandler::disconnect() {
 void GenericConnectionHandler::addCallback(NetworkConnectionEvent const event, OnNetworkEventCallback callback) {
     if(_ch!=nullptr) {
         _ch->addCallback(event, callback);
+    }
+}
+
+void GenericConnectionHandler::setKeepAlive(bool keep_alive) {
+    _keep_alive = keep_alive;
+
+    if(_ch!=nullptr) {
+        _ch->setKeepAlive(keep_alive);
     }
 }
 
