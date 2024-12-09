@@ -35,7 +35,6 @@ static inline void fromIPAddress(const IPAddress src, models::ip_addr& dst) {
   }
 }
 
-// FIXME
 EthernetConnectionHandler::EthernetConnectionHandler(
   unsigned long const timeout,
   unsigned long const responseTimeout,
