@@ -89,12 +89,14 @@ void GenericConnectionHandler::connect() {
     if(_ch!=nullptr) {
         _ch->connect();
     }
+    ConnectionHandler::connect();
 }
 
 void GenericConnectionHandler::disconnect() {
     if(_ch!=nullptr) {
         _ch->disconnect();
     }
+    ConnectionHandler::disconnect();
 }
 
 void GenericConnectionHandler::addCallback(NetworkConnectionEvent const event, OnNetworkEventCallback callback) {
