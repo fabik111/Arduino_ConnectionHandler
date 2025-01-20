@@ -41,7 +41,7 @@ CatM1ConnectionHandler::CatM1ConnectionHandler(
   strcpy(_settings.catm1.apn, apn);
   strcpy(_settings.catm1.login, login);
   strcpy(_settings.catm1.pass, pass);
-  _settings.catm1.rat  = static_cast<int>(rat);
+  _settings.catm1.rat  = static_cast<uint8_t>(rat);
   _settings.catm1.band = band;
 }
 
