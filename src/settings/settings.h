@@ -65,6 +65,7 @@ namespace models {
     char      login[65];
     char      pass[65];
     uint32_t  band;
+    uint8_t   rat;
   };
 
 #if defined(BOARD_HAS_LORA)
