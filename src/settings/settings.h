@@ -122,3 +122,5 @@ namespace models {
     };
   };
 }
+
+#include "settings_default.h"
