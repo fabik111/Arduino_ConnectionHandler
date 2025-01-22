@@ -22,10 +22,12 @@
 #include <IPAddress.h>
 
 namespace models {
+  #if defined(BOARD_HAS_WIFI)
   struct WiFiSetting {
     char ssid[33]; // Max length of ssid is 32 + \0
     char pwd[64];  // Max length of password is 63 + \0
   };
+  #endif //defined(BOARD_HAS_WIFI)
 
   #if defined(BOARD_HAS_ETHERNET)
   // this struct represents an ip address in its simplest form.
@@ -49,16 +51,24 @@ namespace models {
   };
   #endif // BOARD_HAS_ETHERNET
 
+  #if defined(BOARD_HAS_NB) || defined(BOARD_HAS_GSM) ||defined(BOARD_HAS_CELLULAR)
   struct CellularSetting {
     char pin[9];
     char apn[101]; // Max length of apn is 100 + \0
     char login[65];
     char pass[65];
   };
+  #endif // defined(BOARD_HAS_NB) || defined(BOARD_HAS_GSM) || defined(BOARD_HAS_CATM1_NBIOT) || defined(BOARD_HAS_CELLULAR)
 
+  #if defined(BOARD_HAS_GSM)
   typedef CellularSetting GSMSetting;
-  typedef CellularSetting NBSetting;
+  #endif //defined(BOARD_HAS_GSM)
 
+  #if defined(BOARD_HAS_NB)
+  typedef CellularSetting NBSetting;
+  #endif //defined(BOARD_HAS_NB)
+
+  #if defined(BOARD_HAS_CATM1_NBIOT)
   struct CATM1Setting {
     char      pin[9];
     char      apn[101]; // Max length of apn is 100 + \0
@@ -67,6 +77,7 @@ namespace models {
     uint32_t  band;
     uint8_t   rat;
   };
+  #endif //defined(BOARD_HAS_CATM1_NBIOT)
 
 #if defined(BOARD_HAS_LORA)
   struct LoraSetting {
