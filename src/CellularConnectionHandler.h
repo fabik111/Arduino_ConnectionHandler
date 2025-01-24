@@ -53,11 +53,6 @@ class CellularConnectionHandler : public ConnectionHandler
 
   private:
 
-    const char * _pin;
-    const char * _apn;
-    const char * _login;
-    const char * _pass;
-
     ArduinoCellular _cellular;
     TinyGsmClient _gsm_client = _cellular.getNetworkClient();
 };
