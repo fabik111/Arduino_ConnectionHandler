@@ -22,11 +22,10 @@
 static inline ConnectionHandler* instantiate_handler(NetworkAdapter adapter);
 
 bool GenericConnectionHandler::updateSetting(const models::NetworkSetting& s) {
-
-    if(_ch != nullptr && _ch->_current_net_connection_state != NetworkConnectionState::INIT) {
+    if(_ch != nullptr && _current_net_connection_state != NetworkConnectionState::INIT) {
         // If the internal connection handler is already being used and not in INIT phase we cannot update the settings
         return false;
-    } else if(_ch != nullptr && _ch->_current_net_connection_state == NetworkConnectionState::INIT && _interface != s.type) {
+    } else if(_ch != nullptr && _current_net_connection_state == NetworkConnectionState::INIT && _interface != s.type) {
         // If the internal connection handler is already being used and in INIT phase and the interface type is being changed
         // -> we need to deallocate the previously allocated handler
 
