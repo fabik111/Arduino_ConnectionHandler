@@ -38,6 +38,8 @@ class GenericConnectionHandler : public ConnectionHandler
 
     GenericConnectionHandler(bool const keep_alive=true): ConnectionHandler(keep_alive), _ch(nullptr) {}
 
+    NetworkConnectionState check() override;
+    
     #if defined(BOARD_HAS_NOTECARD) || defined(BOARD_HAS_LORA)
       virtual bool available() = 0;
       virtual int read() = 0;
