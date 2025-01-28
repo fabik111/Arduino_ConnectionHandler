@@ -51,7 +51,7 @@ namespace models {
     #endif  //defined(BOARD_HAS_CATM1_NBIOT)
 
     #if defined(BOARD_HAS_LORA)
-    case LORA:
+    case NetworkAdapter::LORA:
       res.lora.band = 5; // _lora_band::EU868
       res.lora.channelMask[0] = '\0';
       res.lora.deviceClass = 'A'; // _lora_class::CLASS_A
